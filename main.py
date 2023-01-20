@@ -48,4 +48,5 @@ t2 = np.polyfit(np.log(echotimes_sorted), px_values_sorted, 1)
 
 plt.plot(np.log(echotimes_sorted), px_values_sorted, '*-')
 plt.show()
+print()
 
