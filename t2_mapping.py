@@ -74,7 +74,7 @@ images_mr, images_np, echotimes = get_image_data(imagepath)
 #iterate over all masks and calculate the t2 value for each pixel in the mask and write them into a new img
 t2_images = []
 t2_means = []
-plt.figure(figsize=(20, 5))
+plt.figure(figsize=(20, 20))
 ncols = 3 
 nrows = (len(masks)+1) // ncols + ((len(masks)+1) % ncols > 0)
 for i, mask in enumerate(masks):
@@ -93,12 +93,12 @@ for i, mask in enumerate(masks):
                 px_values = np.array(px_values)
                 #t2_start = 0.1
                 #t2_fit, cv = scipy.optimize.curve_fit(t2exp, echotimes, px_values, t2_start)
-                t2 = np.polyfit(np.log(echotimes), px_values, 1)
-                t2_image[x,y] = t2[1]
+                t2 = np.polyfit(-np.log(echotimes), px_values, 1)
+                t2_image[x,y] = t2[0]
                 #plot t2 values for each pixel
-                ax.plot(echotimes, px_values, 'o--')
-                t2s.append(t2[1])   
-    title = 'T2 values for joint region ' + str(i+1) + ' (mean: ' + "{:.2f}".format(np.mean(t2s)) + ')'
+                ax.plot(np.log(echotimes), px_values, 'o--')
+                t2s.append(t2[0])   
+    title = 'T2 values for joint region ' + str(i+1) + ' (mean: ' + "{:.2f}".format(np.mean(t2s)) + 'ms)'
     ax.set_title(title)
     ax.set_xlabel('Echo time [ms]')
     ax.set_ylabel('Signal intensity')
